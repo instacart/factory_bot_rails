@@ -1,7 +1,7 @@
-require 'generators/factory_bot'
-require 'factory_bot_rails'
+require 'generators/factory_girl'
+require 'factory_girl_rails'
 
-module FactoryBot
+module FactoryGirl
   module Generators
     class ModelGenerator < Base
       argument(
@@ -43,7 +43,7 @@ module FactoryBot
         insert_into_file(
           factories_file,
           factory_definition,
-          after: "FactoryBot.define do\n"
+          after: "FactoryGirl.define do\n"
         )
       end
 
@@ -62,7 +62,7 @@ RUBY
 
       def single_file_factory_definition
 <<-RUBY
-FactoryBot.define do
+FactoryGirl.define do
 #{factory_definition.chomp}
 end
 RUBY
@@ -75,23 +75,23 @@ RUBY
       end
 
       def filename
-        if factory_bot_options[:filename_proc].present?
-          factory_bot_options[:filename_proc].call(table_name)
+        if factory_girl_options[:filename_proc].present?
+          factory_girl_options[:filename_proc].call(table_name)
         else
           [table_name, filename_suffix].compact.join('_')
         end
       end
 
       def filename_suffix
-        factory_bot_options[:suffix] || options[:suffix]
+        factory_girl_options[:suffix] || options[:suffix]
       end
 
-      def factory_bot_options
-        generators.options[:factory_bot] || {}
+      def factory_girl_options
+        generators.options[:factory_girl] || {}
       end
 
       def generators
-        config = FactoryBot::Railtie.config
+        config = FactoryGirl::Railtie.config
         config.respond_to?(:app_generators) ? config.app_generators : config.generators
       end
     end

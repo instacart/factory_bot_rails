@@ -1,4 +1,4 @@
-module FactoryBotRails
+module FactoryGirlRails
   module Generators
     class NullGenerator
       def initialize(generators)
